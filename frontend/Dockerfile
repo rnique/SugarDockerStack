@@ -4,10 +4,17 @@ LABEL Vendor="CentOS"
 LABEL License=GPLv2
 LABEL Version=2.4.6-31
 
-RUN yum -y update && yum clean all
-RUN yum -y install yum-utils epel-release centos-release-scl libzip libevent && yum -y install httpd && yum clean all
+RUN yum -y update \
+    && yum -y install \
+        libevent \
+        httpd \
+    && yum clean all
+RUN sed -i -e '/ mpm_prefork_module /s/^/#/' -e '/ mpm_event_module /s/^#//' /etc/httpd/conf.modules.d/00-mpm.conf
 
-EXPOSE 80
+EXPOSE 80 443
+
+COPY mpm_event_module.conf /etc/httpd/conf.d/mpm_event_module.conf
+COPY xtraparams.conf /etc/httpd/conf.d/xtraparams.conf
 
 # Simple startup script to avoid some issues observed with container restart 
 COPY run-httpd.sh /run-httpd.sh
