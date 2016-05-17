@@ -29,13 +29,6 @@ RUN yum -y install \
     && yum clean all
 # RUN sed -i -e '/ mpm_prefork_module /s/^/#/' -e '/ mpm_event_module /s/^#//' /etc/httpd/conf.modules.d/00-mpm.conf
 
-EXPOSE 9999
+EXPOSE 9000
 
-COPY mpm_event_module.conf /etc/httpd/conf.d/mpm_event_module.conf
-COPY xtraparams.conf /etc/httpd/conf.d/xtraparams.conf
-
-# Simple startup script to avoid some issues observed with container restart 
-COPY run-httpd.sh /run-httpd.sh
-RUN chmod -v +x /run-httpd.sh
-
-CMD ["/run-httpd.sh"]
+CMD ["php-fpm"]
