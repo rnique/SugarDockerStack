@@ -32,4 +32,4 @@ RUN yum -y install \
 
 # EXPOSE 9000
 
-CMD ["php-fpm"]
+CMD ["/usr/sbin/php-fpm"]
