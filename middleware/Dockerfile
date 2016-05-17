@@ -13,10 +13,10 @@ RUN yum -y update \
     && rpm --import /etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY \
     && yum clean all
 RUN yum -y install \
+    php55u-fpm \
     php55u \
     php55u-bcmath \
     php55u-common \
-    php55u-fpm \
     php55u-gd \
     php55u-imap \
     php55u-ldap \
@@ -29,6 +29,6 @@ RUN yum -y install \
     && yum clean all
 # RUN sed -i -e '/ mpm_prefork_module /s/^/#/' -e '/ mpm_event_module /s/^#//' /etc/httpd/conf.modules.d/00-mpm.conf
 
-EXPOSE 9000
+# EXPOSE 9000
 
 CMD ["php-fpm"]
