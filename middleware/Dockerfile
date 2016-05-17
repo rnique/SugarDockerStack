@@ -8,13 +8,14 @@ RUN yum -y update \
     && yum -y install \
         epel-release \
         libzip \
+        mailcap \
     && rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
     && yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
     && rpm --import /etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY \
     && yum clean all
 RUN yum -y install \
     php55u-fpm \
-    php55u \
+#    php55u \
     php55u-bcmath \
     php55u-common \
     php55u-gd \
