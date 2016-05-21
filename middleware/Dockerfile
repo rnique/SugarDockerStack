@@ -28,7 +28,29 @@ RUN yum -y install \
     php55u-pecl-redis \
     php55u-xml \
     && yum clean all
-# RUN sed -i -e '/ mpm_prefork_module /s/^/#/' -e '/ mpm_event_module /s/^#//' /etc/httpd/conf.modules.d/00-mpm.conf
+
+RUN set -ex \
+	&& cd /etc \
+	&& { \
+		echo '[global]'; \
+		echo 'error_log = /proc/self/fd/2'; \
+		echo; \
+		echo '[www]'; \
+		echo '; if we send this to /proc/self/fd/1, it never appears'; \
+		echo 'access.log = /proc/self/fd/2'; \
+		echo; \
+		echo 'clear_env = no'; \
+		echo; \
+		echo '; Ensure worker stdout and stderr are sent to the main error log.'; \
+		echo 'catch_workers_output = yes'; \
+	} | tee php-fpm.d/docker.conf \
+	&& { \
+		echo '[global]'; \
+		echo 'daemonize = no'; \
+		echo; \
+		echo '[www]'; \
+		echo 'listen = [::]:9000'; \
+	} | tee php-fpm.d/zz-docker.conf
 
 # EXPOSE 9000
 
