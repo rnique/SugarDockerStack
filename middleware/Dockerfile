@@ -31,6 +31,7 @@ RUN yum -y install \
 
 RUN set -ex \
 	&& cd /etc \
+    && sed -i -e '/^error_log/s/^/#/' -e '/^daemonize/s/^/#/' /etc/php-fpm.conf
 	&& { \
 		echo '[global]'; \
 		echo 'error_log = /proc/self/fd/2'; \
