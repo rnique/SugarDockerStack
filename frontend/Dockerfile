@@ -10,36 +10,7 @@ RUN yum -y update \
         httpd \
     && yum clean all
 RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
-        -e '/ mpm_event_module /s/^#//' /etc/httpd/conf.modules.d/00-mpm.conf \
-    && sed -i -e '/ access_compat_module /s/^/#/' \
-        -e '/ actions_module /s/^/#/' \
-        -e '/ allowmethods_module /s/^/#/' \
-        -e '/ authn_anon_module /s/^/#/' \
-        -e '/ authn_dbm_module /s/^/#/' \
-        -e '/ authz_dbm_module /s/^/#/' \
-        -e '/ authz_owner_module /s/^/#/' \
-        -e '/ cache_disk_module /s/^/#/' \
-        -e '/ cache_module /s/^/#/' \
-        -e '/ ext_filter_module /s/^/#/' \
-        -e '/ include_module /s/^/#/' \
-        -e '/ info_module /s/^/#/' \
-        -e '/ remoteip_module /s/^/#/' \
-        -e '/ slotmem_plain_module /s/^/#/' \
-        -e '/ socache_memcache_module /s/^/#/' \
-        -e '/ status_module /s/^/#/' \
-        -e '/ substitute_module /s/^/#/' \
-        -e '/ suexec_module /s/^/#/' \
-        -e '/ userdir_module /s/^/#/' \
-        -e '/ version_module /s/^/#/' \
-        -e '/ vhost_alias_module /s/^/#/' \
-        /etc/httpd/conf.modules.d/00-base.conf \
-    && sed -i -e '/ dav_module /s/^/#/' \
-        -e '/ dav_fs_module /s/^/#/' \
-        -e '/ dav_lock_module /s/^/#/' \
-        /etc/httpd/conf.modules.d/00-dav.conf \
-    && sed -i -e '/ lua_module /s/^/#/' \
-        /etc/httpd/conf.modules.d/00-lua.conf 
-
+        -e '/ mpm_event_module /s/^#//' /etc/httpd/conf.modules.d/00-mpm.conf
 
 EXPOSE 80 443
 
