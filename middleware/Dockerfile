@@ -51,6 +51,7 @@ RUN set -ex \
 		echo; \
 		echo '[www]'; \
 		echo 'listen = [::]:9000'; \
+        echo 'pm = ondemand'; \
 	} | tee php-fpm.d/zz-docker.conf
 
 # EXPOSE 9000

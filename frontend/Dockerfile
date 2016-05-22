@@ -14,6 +14,7 @@ RUN sed -i -e '/ mpm_prefork_module /s/^/#/' -e '/ mpm_event_module /s/^#//' /et
 EXPOSE 80 443
 
 COPY mpm_event_module.conf /etc/httpd/conf.d/mpm_event_module.conf
+COPY security.conf /etc/httpd/conf.d/security.conf
 COPY xtraparams.conf /etc/httpd/conf.d/xtraparams.conf
 
 # Simple startup script to avoid some issues observed with container restart 
