@@ -10,7 +10,7 @@ RUN yum -y update \
         httpd \
     && yum clean all
 RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
-        -e '/ mpm_event_module /s/^/#/' /etc/httpd/conf.modules.d/00-mpm.conf \
+        -e '/ mpm_event_module /s/^#//' /etc/httpd/conf.modules.d/00-mpm.conf \
     && sed -i -e '/ access_compat_module /s/^/#/' \
         -e '/ actions_module /s/^/#/' \
         -e '/ allowmethods_module /s/^/#/' \
