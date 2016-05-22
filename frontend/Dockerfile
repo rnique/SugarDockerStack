@@ -38,18 +38,8 @@ RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
         -e '/ dav_lock_module /s/^/#/' \
         /etc/httpd/conf.modules.d/00-dav.conf \
     && sed -i -e '/ lua_module /s/^/#/' \
-        /etc/httpd/conf.modules.d/00-lua.conf \
-    && sed -i -e '/ lbmethod_bybusyness_module /s/^/#/' \
-        -e '/ lbmethod_byrequests_module /s/^/#/' \
-        -e '/ lbmethod_bytraffic_module /s/^/#/' \
-        -e '/ lbmethod_heartbeat_module /s/^/#/' \
-        -e '/ proxy_ajp_module /s/^/#/' \
-        -e '/ proxy_balancer_module /s/^/#/' \
-        -e '/ proxy_connect_module /s/^/#/' \
-        -e '/ proxy_express_module /s/^/#/' \
-        -e '/ proxy_scgi_module /s/^/#/' \
-        -e '/ proxy_wstunnel_module /s/^/#/' \
-        /etc/httpd/conf.modules.d/00-proxy.conf
+        /etc/httpd/conf.modules.d/00-lua.conf 
+
 
 EXPOSE 80 443
 
