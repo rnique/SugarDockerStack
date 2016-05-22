@@ -31,7 +31,8 @@ RUN yum -y install \
 
 RUN set -ex \
 	&& cd /etc \
-    && sed -i -e '/^error_log/s/^/#/' -e '/^daemonize/s/^/#/' /etc/php-fpm.conf \
+    && sed -i -e '/^error_log/s/^/#/' -e '/^daemonize/s/^/#/' php-fpm.conf \
+    && sed -i -e '/listen.allowed_clients/s/^/#/' ./php-fpm.d/www.conf \
 	&& { \
 		echo '[global]'; \
 		echo 'error_log = /proc/self/fd/2'; \
@@ -51,7 +52,6 @@ RUN set -ex \
 		echo; \
 		echo '[www]'; \
 		echo 'listen = 9000'; \
-		echo 'listen.allowed_clients = '; \
         echo 'pm.status_path = /php-status-page'; \
         echo 'pm = ondemand'; \
 	} | tee php-fpm.d/zz-docker.conf
