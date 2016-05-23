@@ -13,7 +13,9 @@ services:
             # bind mount my local my.cnf
             # - $PWD/my.cnf:/etc/my.cnf
         networks:
-            - back-tier
+            back-tier:
+                aliases:
+                    - mysql
         command:
             # Workaround for no my.cnf in image
             - '--user=mysql'
