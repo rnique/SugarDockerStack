@@ -70,6 +70,6 @@ RUN set -ex \
         echo 'pm = ondemand'; \
 	} | tee php-fpm.d/zz-docker.conf
 
-# EXPOSE 9000
+EXPOSE 9000
 
 CMD ["php-fpm"]
