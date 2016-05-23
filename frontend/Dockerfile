@@ -32,7 +32,13 @@ RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
         -e '/ userdir_module /s/^/#/' \
         -e '/ version_module /s/^/#/' \
         -e '/ vhost_alias_module /s/^/#/' \
-        /etc/httpd/conf.modules.d/00-base.conf
+        /etc/httpd/conf.modules.d/00-base.conf \
+    && sed -i -e '/ dav_module /s/^/#/' \
+        -e '/ dav_fs_module /s/^/#/' \
+        -e '/ dav_lock_module /s/^/#/' \
+        /etc/httpd/conf.modules.d/00-dav.conf \
+    && sed -i -e '/ lua_module /s/^/#/' \
+        /etc/httpd/conf.modules.d/00-lua.conf
 
 EXPOSE 80 443
 
