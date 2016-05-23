@@ -1,9 +1,9 @@
 version: "2"
 services:
-    percona:
+    db:
         image: percona/percona-server:latest
         environment:
-            MYSQL_ROOT_PASSWORD: secret
+            - MYSQL_ROOT_PASSWORD: secret
         ports:
             - "3306:3306"
         volumes:
@@ -12,6 +12,8 @@ services:
             - db_data:/var/lib/mysql
             # bind mount my local my.cnf
             # - $PWD/my.cnf:/etc/my.cnf
+        networks:
+            - back-tier
         command:
             # Workaround for no my.cnf in image
             - '--user=mysql'
@@ -19,3 +21,6 @@ volumes:
     db_data:
         driver: local
     db_logs: {}
+networks:
+    back-tier:
+        driver: bridge

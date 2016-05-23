@@ -1,0 +1,16 @@
+version: "2"
+services:
+    php:
+        build: .
+        environment:
+            - MYSQL_ROOT_PASSWORD: secret
+        volumes:
+            - /var/www/html:/var/www/html
+        networks:
+            - front-tier
+            - back-tier
+networks:
+    front-tier:
+        driver: bridge
+    back-tier:
+        driver: bridge

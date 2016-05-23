@@ -1,0 +1,13 @@
+version: "2"
+services:
+    redis:
+        image: centos/redis
+        environment:
+            - MASTER:true
+        volumes:
+            - redis-data:/var/lib/redis
+        networks:
+            - front-tier
+networks:
+    front-tier:
+        driver: bridge

@@ -1,0 +1,14 @@
+version: "2"
+services:
+    apache:
+        build: .
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - /var/www/html:/var/www/html
+        networks:
+            - front-tier
+networks:
+    front-tier:
+        driver: bridge
