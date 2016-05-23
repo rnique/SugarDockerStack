@@ -44,6 +44,10 @@ RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
         -e '/ lbmethod_byrequests_module /s/^/#/' \
         -e '/ lbmethod_bytraffic_module /s/^/#/' \
         -e '/ lbmethod_heartbeat_module /s/^/#/' \
+        -e '/ proxy_balancer_module /s/^/#/' \
+        -e '/ proxy_fdpass_module /s/^/#/' \
+        -e '/ proxy_express_module /s/^/#/' \
+        -e '/ proxy_scgi_module /s/^/#/' \
         /etc/httpd/conf.modules.d/00-proxy.conf
 
 EXPOSE 80 443
