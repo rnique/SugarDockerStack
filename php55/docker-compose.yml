@@ -3,7 +3,7 @@ services:
     php:
         build: .
         environment:
-            - MYSQL_ROOT_PASSWORD: secret
+            - MYSQL_ROOT_PASSWORD=secret
         volumes:
             - /var/www/html:/var/www/html
         networks:

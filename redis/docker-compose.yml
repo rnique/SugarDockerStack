@@ -3,11 +3,13 @@ services:
     redis:
         image: centos/redis
         environment:
-            - MASTER:true
+            - MASTER=true
         volumes:
             - redis-data:/var/lib/redis
         networks:
             - front-tier
+        expose:
+            - "6379"
 networks:
     front-tier:
         driver: bridge
