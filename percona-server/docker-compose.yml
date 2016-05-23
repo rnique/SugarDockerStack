@@ -8,10 +8,14 @@ services:
             - "3306:3306"
         volumes:
             # create volumes for use
-            - /var/log/mysql
-            - /var/lib/mysql
+            - db_logs:/var/log/mysql
+            - db_data:/var/lib/mysql
             # bind mount my local my.cnf
             # - $PWD/my.cnf:/etc/my.cnf
         command:
             # Workaround for no my.cnf in image
             - '--user=mysql'
+volumes:
+    db_data:
+        driver: local
+    db_logs: {}
