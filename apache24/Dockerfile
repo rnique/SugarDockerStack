@@ -54,9 +54,9 @@ RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
         -e '/ proxy_fdpass_module /s/^/#/' \
         -e '/ proxy_express_module /s/^/#/' \
         -e '/ proxy_scgi_module /s/^/#/' \
-        /etc/httpd/conf.modules.d/00-proxy.conf \
-    && sed -i -e '/ModPagespeedRespectVary /s/#//' \
-        /etc/httpd/conf.d/pagespeed.conf 2&>1
+        /etc/httpd/conf.modules.d/00-proxy.conf 
+#    && sed -i -e '/ModPagespeedRespectVary /s/#//' \
+#        /etc/httpd/conf.d/pagespeed.conf
 
 EXPOSE 80 443
 
