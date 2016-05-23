@@ -10,10 +10,11 @@ RUN yum -y update \
         httpd \
         libevent \
         wget \
-    && yum clean all 
-#    && wget https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_x86_64.rpm \
-#    && rpm -Uvh mod-pagespeed-stable_current_x86_64.rpm \
-#    && rm mod-pagespeed-stable_current_x86_64.rpm
+    && yum clean all \
+    && atd \
+    && wget https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_x86_64.rpm \
+    && rpm -Uv mod-pagespeed-stable_current_x86_64.rpm \
+    && rm mod-pagespeed-stable_current_x86_64.rpm
 RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
         -e '/ mpm_event_module /s/^#//' /etc/httpd/conf.modules.d/00-mpm.conf \
     && sed -i -e '/ access_compat_module /s/^/#/' \
