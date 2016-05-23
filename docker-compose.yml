@@ -5,7 +5,7 @@ percona:
   environment:
     MYSQL_ROOT_PASSWORD: secret
   ports:
-    - "3306"
+    - "3306:3306"
   volumes:
     # create volumes for use
     - /var/log/mysql
