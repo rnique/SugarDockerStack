@@ -15,6 +15,7 @@ RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
         -e '/ actions_module /s/^/#/' \
         -e '/ allowmethods_module /s/^/#/' \
         -e '/ authn_anon_module /s/^/#/' \
+        -e '/ auth_digest_module /s/^/#/' \
         -e '/ authn_dbm_module /s/^/#/' \
         -e '/ authz_dbm_module /s/^/#/' \
         -e '/ authz_owner_module /s/^/#/' \
@@ -38,7 +39,12 @@ RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
         -e '/ dav_lock_module /s/^/#/' \
         /etc/httpd/conf.modules.d/00-dav.conf \
     && sed -i -e '/ lua_module /s/^/#/' \
-        /etc/httpd/conf.modules.d/00-lua.conf
+        /etc/httpd/conf.modules.d/00-lua.conf \
+    && sed -i -e '/ lbmethod_bybusyness_module /s/^/#/' \
+        -e '/ lbmethod_byrequests_module /s/^/#/' \
+        -e '/ lbmethod_bytraffic_module /s/^/#/' \
+        -e '/ lbmethod_heartbeat_module /s/^/#/' \
+        /etc/httpd/conf.modules.d/00-proxy.conf
 
 EXPOSE 80 443
 
