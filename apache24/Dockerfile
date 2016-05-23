@@ -16,7 +16,8 @@ RUN yum -y update \
 #    && rpm -U mod-pagespeed-stable_current_x86_64.rpm \
 #    && rm mod-pagespeed-stable_current_x86_64.rpm
 RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
-        -e '/ mpm_event_module /s/^#//' /etc/httpd/conf.modules.d/00-mpm.conf \
+        -e '/ mpm_event_module /s/^#//' \
+        /etc/httpd/conf.modules.d/00-mpm.conf \
     && sed -i -e '/ actions_module /s/^/#/' \
         -e '/ allowmethods_module /s/^/#/' \
         -e '/ authn_anon_module /s/^/#/' \
@@ -53,7 +54,9 @@ RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
         -e '/ proxy_fdpass_module /s/^/#/' \
         -e '/ proxy_express_module /s/^/#/' \
         -e '/ proxy_scgi_module /s/^/#/' \
-        /etc/httpd/conf.modules.d/00-proxy.conf
+        /etc/httpd/conf.modules.d/00-proxy.conf \
+    && sed -i -e '/ModPagespeedRespectVary /s/#//' \
+        /etc/httpd/conf.d/pagespeed.conf
 
 EXPOSE 80 443
 
