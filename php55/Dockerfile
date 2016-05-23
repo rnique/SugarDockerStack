@@ -12,27 +12,41 @@ RUN yum -y update \
     && rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
     && yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
     && rpm --import /etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY \
-    && yum clean all
-RUN yum -y install \
-    php55u-fpm \
-#    php55u \
-    php55u-bcmath \
-    php55u-common \
-    php55u-gd \
-    php55u-imap \
-    php55u-ldap \
-    php55u-mbstring \
-    php55u-mcrypt \
-    php55u-mysqlnd \
-    php55u-opcache \
-    php55u-pecl-redis \
-    php55u-xml \
+    && yum clean all \
+    && yum -y install \
+        php55u-fpm \
+        php55u-bcmath \
+        php55u-common \
+        php55u-gd \
+        php55u-imap \
+        php55u-ldap \
+        php55u-mbstring \
+        php55u-mcrypt \
+        php55u-mysqlnd \
+        php55u-opcache \
+        php55u-pecl-redis \
+        php55u-xml \
     && yum clean all
 
 RUN set -ex \
 	&& cd /etc \
     && sed -i -e '/^error_log/s/^/#/' -e '/^daemonize/s/^/#/' php-fpm.conf \
     && sed -i -e '/listen.allowed_clients/s/^/#/' ./php-fpm.d/www.conf \
+	&& { \
+		echo 'date.timezone = America/Lima'; \
+		echo 'display_errors = 0'; \
+		echo 'fastcgi.logging = 0'; \
+		echo 'mbstring.func_overload = 0'; \
+		echo 'post_max_size = 100M'; \
+		echo 'session.use_cookies = 1'; \
+		echo 'session.cookie_httponly = 1'; \
+		echo ';session.save_handler = redis'; \
+		echo 'session.use_trans_sid = 0'; \
+		echo 'upload_max_filesize = 99M'; \
+		echo 'max_execution_time = 120'; \
+		echo 'memory_limit = 256M'; \
+		echo 'default_charset = "UTF-8"'; \
+	} | tee -a php.ini \
 	&& { \
 		echo '[global]'; \
 		echo 'error_log = /proc/self/fd/2'; \
