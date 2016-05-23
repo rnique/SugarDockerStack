@@ -8,8 +8,8 @@ services:
             - "3306:3306"
         volumes:
             # create volumes for use
-            - db_logs:/var/log/mysql
-            - db_data:/var/lib/mysql
+            - data:/var/lib/mysql
+            - logs:/var/log
             # bind mount my local my.cnf
             # - $PWD/my.cnf:/etc/my.cnf
         networks:
@@ -18,9 +18,9 @@ services:
             # Workaround for no my.cnf in image
             - '--user=mysql'
 volumes:
-    db_data:
+    data:
         driver: local
-    db_logs: {}
+    logs: {}
 networks:
     back-tier:
         driver: bridge

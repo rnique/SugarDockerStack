@@ -7,8 +7,11 @@ services:
             - "443:443"
         volumes:
             - /var/www/html:/var/www/html
+            - logs:/var/log
         networks:
             - front-tier
+volumes:
+    logs: {}
 networks:
     front-tier:
         driver: bridge

@@ -6,9 +6,12 @@ services:
             - MYSQL_ROOT_PASSWORD=secret
         volumes:
             - /var/www/html:/var/www/html
+            - logs:/var/log
         networks:
             - front-tier
             - back-tier
+volumes:
+    logs: {}
 networks:
     front-tier:
         driver: bridge
