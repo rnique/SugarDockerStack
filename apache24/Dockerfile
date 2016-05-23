@@ -11,10 +11,9 @@ RUN yum -y update \
         libevent \
         wget \
     && yum clean all \
-    && wget -nv https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_x86_64.rpm
-#    && atd \
-#    && rpm -U mod-pagespeed-stable_current_x86_64.rpm \
-#    && rm mod-pagespeed-stable_current_x86_64.rpm
+    && wget -nv https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_x86_64.rpm \
+    && rpm -U mod-pagespeed-stable_current_x86_64.rpm 2>/dev/null \
+    && rm mod-pagespeed-stable_current_x86_64.rpm
 RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
         -e '/ mpm_event_module /s/^#//' \
         /etc/httpd/conf.modules.d/00-mpm.conf \
@@ -54,9 +53,10 @@ RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
         -e '/ proxy_fdpass_module /s/^/#/' \
         -e '/ proxy_express_module /s/^/#/' \
         -e '/ proxy_scgi_module /s/^/#/' \
-        /etc/httpd/conf.modules.d/00-proxy.conf 
-#    && sed -i -e '/ModPagespeedRespectVary /s/#//' \
-#        /etc/httpd/conf.d/pagespeed.conf
+        /etc/httpd/conf.modules.d/00-proxy.conf \
+    && sed -i -e '/ModPagespeedRespectVary /s/#//' \
+        /etc/httpd/conf.d/pagespeed.conf 2>/dev/null \
+    && sh /etc/cron.daily/mod-pagespeed
 
 EXPOSE 80 443
 
