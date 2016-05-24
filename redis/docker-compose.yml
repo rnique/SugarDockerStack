@@ -7,7 +7,6 @@ services:
         volumes:
             - redis-data:/var/lib/redis
         tmpfs:
-            - /var/log
             - /tmp
         # networks:
             # - back-tier

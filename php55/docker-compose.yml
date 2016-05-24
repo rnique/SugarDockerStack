@@ -8,7 +8,6 @@ services:
         volumes:
             - /var/www/html:/var/www/html
         tmpfs:
-            - /var/log
             - /tmp
         # networks:
             # front-tier:

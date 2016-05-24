@@ -9,7 +9,6 @@ services:
         volumes:
 #            - ./elasticsearch.yml:/opt/elasticsearch/config/elasticsearch.yml
         tmpfs:
-            - /var/log
             - /tmp
         # networks:
             # - back-tier
