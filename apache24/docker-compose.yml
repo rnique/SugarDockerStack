@@ -8,10 +8,8 @@ services:
             - "443:443"
         volumes:
             - /var/www/html:/var/www/html
-            - logs:/var/log
         tmpfs:
+            - /var/log
             - /tmp
         # networks:
             # - front-tier
-volumes:
-    logs: {}

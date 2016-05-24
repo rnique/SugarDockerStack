@@ -7,14 +7,11 @@ services:
             - MYSQL_ROOT_PASSWORD=secret
         volumes:
             - /var/www/html:/var/www/html
-            - logs:/var/log
         tmpfs:
+            - /var/log
             - /tmp
         # networks:
             # front-tier:
                 # aliases:
                     # - php
             # back-tier:
-volumes:
-    logs: {}
-

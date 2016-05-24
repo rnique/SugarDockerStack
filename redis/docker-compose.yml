@@ -6,8 +6,8 @@ services:
             - MASTER=true
         volumes:
             - redis-data:/var/lib/redis
-            - logs:/var/log
         tmpfs:
+            - /var/log
             - /tmp
         # networks:
             # - back-tier
@@ -15,4 +15,3 @@ services:
             - "6379"
 volumes:
     redis_data: {}
-    logs: {}

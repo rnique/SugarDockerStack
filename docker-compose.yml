@@ -7,8 +7,8 @@ services:
             - MYSQL_ROOT_PASSWORD=secret
         volumes:
             - /var/www/html:/var/www/html
-            - logs:/var/log
         tmpfs:
+            - /var/log
             - /tmp
         networks:
             front-tier:
@@ -23,8 +23,8 @@ services:
             - "443:443"
         volumes:
             - /var/www/html:/var/www/html
-            - logs:/var/log
         tmpfs:
+            - /var/log
             - /tmp
         networks:
             - front-tier
@@ -35,8 +35,8 @@ services:
         ports:
             - "3306:3306"
         volumes:
-            - data:/var/lib/mysql
-            - logs:/var/log
+            - db-data:/var/lib/mysql
+            - db-logs:/var/log
             # bind mount my local my.cnf
             # - $PWD/my.cnf:/etc/my.cnf
         tmpfs:
@@ -54,8 +54,8 @@ services:
             - MASTER=true
         volumes:
             - redis-data:/var/lib/redis
-            - logs:/var/log
         tmpfs:
+            - /var/log
             - /tmp
         networks:
             back-tier:
@@ -64,8 +64,8 @@ services:
         expose:
             - "6379"
 volumes:
-    data: {}
-    logs: {}
+    db-data: {}
+    db-logs: {}
     redis-data: {}
 networks:
     front-tier:

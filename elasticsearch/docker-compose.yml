@@ -8,13 +8,11 @@ services:
             - "9200:9200/tcp"
         volumes:
 #            - ./elasticsearch.yml:/opt/elasticsearch/config/elasticsearch.yml
-            - logs:/var/log
         tmpfs:
+            - /var/log
             - /tmp
         # networks:
             # - back-tier
         expose:
             - "9200"
             - "9300"
-volumes:
-    logs: {}
