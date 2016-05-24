@@ -4,16 +4,16 @@ LABEL Vendor="PHP"
 LABEL License=GPLv2
 LABEL Version=5.5.x
 
-RUN yum -y update \
-    && yum -y install \
+RUN yum -y --setopt=tsflags=nodocs update \
+    && yum -y --setopt=tsflags=nodocs install \
         epel-release \
         libzip \
         mailcap \
     && rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
-    && yum -y install https://centos7.iuscommunity.org/ius-release.rpm \
+    && yum -y --setopt=tsflags=nodocs install https://centos7.iuscommunity.org/ius-release.rpm \
     && rpm --import /etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY \
     && yum clean all \
-    && yum -y install \
+    && yum -y --setopt=tsflags=nodocs install \
         php55u-fpm \
         php55u-bcmath \
         php55u-common \

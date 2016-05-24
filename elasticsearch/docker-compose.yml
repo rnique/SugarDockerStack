@@ -1,0 +1,21 @@
+version: "2"
+services:
+    elasticsearch:
+        image: million12/elasticsearch:1.4.4
+        environment:
+            - MARVEL_SUPPORT=true
+        ports:
+            - "9200:9200/tcp"
+        volumes:
+#            - ./elasticsearch.yml:/opt/elasticsearch/config/elasticsearch.yml
+            - logs:/var/log
+        networks:
+            - back-tier
+        expose:
+            - "9200"
+            - "9300"
+volumes:
+    logs: {}
+networks:
+    back-tier:
+        driver: overlay

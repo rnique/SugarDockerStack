@@ -25,4 +25,4 @@ volumes:
     logs: {}
 networks:
     back-tier:
-        driver: bridge
+        driver: overlay

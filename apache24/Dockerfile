@@ -4,8 +4,8 @@ LABEL Vendor="CentOS"
 LABEL License=GPLv2
 LABEL Version=2.4.6-31
 
-RUN yum -y update \
-    && yum -y install \
+RUN yum -y --setopt=tsflags=nodocs update \
+    && yum -y --setopt=tsflags=nodocs install \
         at \
         httpd \
         libevent \
