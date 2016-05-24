@@ -6,10 +6,15 @@ LABEL Version=2.4.6-31
 
 RUN yum -y --setopt=tsflags=nodocs update \
     && yum -y --setopt=tsflags=nodocs install \
-        at \
+        epel-release \
+        libzip \
+        mailcap \
+        wget \
+    && yum clean all
+
+RUN yum -y --setopt=tsflags=nodocs install \
         httpd \
         libevent \
-        wget \
     && yum clean all \
     && wget -nv https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_x86_64.rpm \
     && rpm -U mod-pagespeed-stable_current_x86_64.rpm 2>/dev/null \

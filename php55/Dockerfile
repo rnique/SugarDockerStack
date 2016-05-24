@@ -11,10 +11,12 @@ RUN yum -y --setopt=tsflags=nodocs update \
         epel-release \
         libzip \
         mailcap \
-    && rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
+        wget \
+    && yum clean all
+
+RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
     && yum -y --setopt=tsflags=nodocs install https://centos7.iuscommunity.org/ius-release.rpm \
     && rpm --import /etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY \
-    && yum clean all \
     && yum -y --setopt=tsflags=nodocs install \
         php55u-fpm \
         php55u-bcmath \
@@ -28,9 +30,8 @@ RUN yum -y --setopt=tsflags=nodocs update \
         php55u-opcache \
         php55u-pecl-redis \
         php55u-xml \
-    && yum clean all
-
-RUN set -ex \
+    && yum clean all \
+    && set -ex \
 	&& cd /etc \
     && sed -i -e '/^error_log/s/^/#/' -e '/^daemonize/s/^/#/' php-fpm.conf \
     && sed -i -e '/listen.allowed_clients/s/^/#/' ./php-fpm.d/www.conf \
