@@ -65,7 +65,7 @@ services:
             - "6379"
 volumes:
     db-data: {}
-    logs/mysql: {}
+    logs: {}
     redis-data: {}
 networks:
     front-tier:
