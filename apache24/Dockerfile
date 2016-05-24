@@ -15,6 +15,7 @@ RUN yum -y --setopt=tsflags=nodocs update \
 RUN yum -y --setopt=tsflags=nodocs install \
         httpd \
         libevent \
+        at \
     && yum clean all \
     && wget -nv https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_x86_64.rpm \
     && rpm -U mod-pagespeed-stable_current_x86_64.rpm 2>/dev/null \
