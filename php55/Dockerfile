@@ -43,8 +43,6 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
 		echo 'post_max_size = 100M'; \
 		echo 'session.use_cookies = 1'; \
 		echo 'session.cookie_httponly = 1'; \
-		echo "session.save_handler = ${PHP_SESSION_SAVE_HANDLER}"; \
-		echo "session.save_path = ${PHP_SESSION_SAVE_PATH}"; \
 		echo 'session.use_trans_sid = 0'; \
 		echo 'upload_max_filesize = 99M'; \
 		echo 'max_execution_time = 120'; \
@@ -54,9 +52,14 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
 	} | tee -a php.ini \
 	&& { \
 		echo '[global]'; \
+		echo 'daemonize = no'; \
 		echo 'error_log = /proc/self/fd/2'; \
 		echo; \
 		echo '[www]'; \
+		echo 'listen = 9000'; \
+        echo 'pm.status_path = /php-status-page'; \
+        echo 'pm = ondemand'; \
+		echo; \
 		echo '; if we send this to /proc/self/fd/1, it never appears'; \
 		echo 'access.log = /proc/self/fd/2'; \
 		echo; \
@@ -64,15 +67,8 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
 		echo; \
 		echo '; Ensure worker stdout and stderr are sent to the main error log.'; \
 		echo 'catch_workers_output = yes'; \
-	} | tee php-fpm.d/docker.conf \
-	&& { \
-		echo '[global]'; \
-		echo 'daemonize = no'; \
-		echo; \
-		echo '[www]'; \
-		echo 'listen = 9000'; \
-        echo 'pm.status_path = /php-status-page'; \
-        echo 'pm = ondemand'; \
+		echo "php_value[session.save_handler] = ${PHP_SESSION_SAVE_HANDLER}"; \
+		echo "php_value[session.save_path] = ${PHP_SESSION_SAVE_PATH}"; \
 	} | tee php-fpm.d/zz-docker.conf
 
 EXPOSE 9000
