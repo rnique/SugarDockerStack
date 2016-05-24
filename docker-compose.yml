@@ -1,10 +1,11 @@
 version: "2"
 services:
     php:
-        build: ./php55
-        ARGS:
-            PHP_SESSION_SAVE_HANDLER: redis
-            PHP_SESSION_SAVE_PATH: "tcp://redis:6379"
+        build:
+            context: ./php55
+            args:
+                PHP_SESSION_SAVE_HANDLER: redis
+                PHP_SESSION_SAVE_PATH: "tcp://redis:6379"
         image: gcr.io/ste-optical-vts/php55
         volumes:
             - /var/www/html:/var/www/html
@@ -16,7 +17,8 @@ services:
                     - php
             back-tier:
     apache:
-        build: ./apache24
+        build:
+            context: ./apache24
         image: gcr.io/ste-optical-vts/apache24
         ports:
             - "80:80"
@@ -35,7 +37,7 @@ services:
             - "3306:3306"
         volumes:
             - db-data:/var/lib/mysql
-            - db-logs:/var/log
+            - logs/mysql:/var/log/mysql
             # bind mount my local my.cnf
             # - $PWD/my.cnf:/etc/my.cnf
         tmpfs:
@@ -63,7 +65,7 @@ services:
             - "6379"
 volumes:
     db-data: {}
-    db-logs: {}
+    logs/mysql: {}
     redis-data: {}
 networks:
     front-tier:
