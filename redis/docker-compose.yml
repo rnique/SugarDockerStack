@@ -8,7 +8,6 @@ services:
             - redis-data:/var/lib/redis
             - logs:/var/log
         tmpfs:
-            - var/run
             - /tmp
         # networks:
             # - back-tier

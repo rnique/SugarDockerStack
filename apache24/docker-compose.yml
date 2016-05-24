@@ -9,7 +9,6 @@ services:
             - /var/www/html:/var/www/html
             - logs:/var/log
         tmpfs:
-            - var/run
             - /tmp
         # networks:
             # - front-tier
