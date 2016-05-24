@@ -9,13 +9,14 @@ services:
         volumes:
 #            - ./elasticsearch.yml:/opt/elasticsearch/config/elasticsearch.yml
             - logs:/var/log
-        networks:
-            - back-tier
+        tmpfs:
+            - var/run
+            - /tmp
+        # networks:
+            # - back-tier
         expose:
             - "9200"
             - "9300"
 volumes:
     logs: {}
-networks:
-    back-tier:
-        driver: overlay
+

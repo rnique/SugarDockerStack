@@ -12,10 +12,13 @@ services:
             - logs:/var/log
             # bind mount my local my.cnf
             # - $PWD/my.cnf:/etc/my.cnf
-        networks:
-            back-tier:
-                aliases:
-                    - mysql
+        tmpfs:
+            - var/run
+            - /tmp
+        # networks:
+            # back-tier:
+                # aliases:
+                    # - mysql
         command:
             # Workaround for no my.cnf in image
             - '--user=mysql'
@@ -23,6 +26,4 @@ volumes:
     data:
         driver: local
     logs: {}
-networks:
-    back-tier:
-        driver: overlay
+

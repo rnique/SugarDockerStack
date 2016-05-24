@@ -8,15 +8,14 @@ services:
         volumes:
             - /var/www/html:/var/www/html
             - logs:/var/log
-        networks:
-            front-tier:
-                aliases:
-                    - php
-            back-tier:
+        tmpfs:
+            - var/run
+            - /tmp
+        # networks:
+            # front-tier:
+                # aliases:
+                    # - php
+            # back-tier:
 volumes:
     logs: {}
-networks:
-    front-tier:
-        driver: overlay
-    back-tier:
-        driver: overlay
+

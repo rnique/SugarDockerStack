@@ -8,10 +8,10 @@ services:
         volumes:
             - /var/www/html:/var/www/html
             - logs:/var/log
-        networks:
-            - front-tier
+        tmpfs:
+            - var/run
+            - /tmp
+        # networks:
+            # - front-tier
 volumes:
     logs: {}
-networks:
-    front-tier:
-        driver: overlay
