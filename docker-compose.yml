@@ -66,6 +66,7 @@ services:
 volumes:
     data: {}
     logs: {}
+    redis_data: {}
 networks:
     front-tier:
     back-tier:
