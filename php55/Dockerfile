@@ -3,6 +3,8 @@ MAINTAINER http://steperu.com
 LABEL Vendor="PHP"
 LABEL License=GPLv2
 LABEL Version=5.5.x
+ARG PHP_SESSION_SAVE_HANDLER=redis
+ARG PHP_SESSION_SAVE_PATH="tcp://redis:6379"
 
 RUN yum -y --setopt=tsflags=nodocs update \
     && yum -y --setopt=tsflags=nodocs install \
@@ -40,12 +42,14 @@ RUN set -ex \
 		echo 'post_max_size = 100M'; \
 		echo 'session.use_cookies = 1'; \
 		echo 'session.cookie_httponly = 1'; \
-		echo ';session.save_handler = redis'; \
+		echo "session.save_handler = ${PHP_SESSION_SAVE_HANDLER}"; \
+		echo "session.save_path = ${PHP_SESSION_SAVE_PATH}"; \
 		echo 'session.use_trans_sid = 0'; \
 		echo 'upload_max_filesize = 99M'; \
 		echo 'max_execution_time = 120'; \
 		echo 'memory_limit = 256M'; \
 		echo 'default_charset = "UTF-8"'; \
+		echo 'session.gc_maxlifetime = 36000'; \        
 	} | tee -a php.ini \
 	&& { \
 		echo '[global]'; \

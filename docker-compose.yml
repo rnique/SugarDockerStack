@@ -2,9 +2,10 @@ version: "2"
 services:
     php:
         build: ./php55
+        ARGS:
+            PHP_SESSION_SAVE_HANDLER: redis
+            PHP_SESSION_SAVE_PATH: "tcp://redis:6379"
         image: gcr.io/ste-optical-vts/php55
-        environment:
-            - MYSQL_ROOT_PASSWORD=secret
         volumes:
             - /var/www/html:/var/www/html
         tmpfs:
