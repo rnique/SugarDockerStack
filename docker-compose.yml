@@ -16,7 +16,7 @@ services:
                     - php
             back-tier:
     apache:
-        build: .
+        build: ./apache24
         ports:
             - "80:80"
             - "443:443"
