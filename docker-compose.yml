@@ -17,6 +17,7 @@ services:
             back-tier:
     apache:
         build: ./apache24
+        image: gcr.io/ste-optical-vts/apache24
         ports:
             - "80:80"
             - "443:443"
@@ -27,9 +28,44 @@ services:
             - /tmp
         networks:
             - front-tier
+    db:
+        image: percona/percona-server:latest
+        environment:
+            - MYSQL_ROOT_PASSWORD=secret
+        ports:
+            - "3306:3306"
+        volumes:
+            - data:/var/lib/mysql
+            - logs:/var/log
+            # bind mount my local my.cnf
+            # - $PWD/my.cnf:/etc/my.cnf
+        tmpfs:
+            - /tmp
+        networks:
+            back-tier:
+                aliases:
+                    - mysql
+        command:
+            # Workaround for no my.cnf in image
+            - '--user=mysql'
+    redis:
+        image: centos/redis
+        environment:
+            - MASTER=true
+        volumes:
+            - redis-data:/var/lib/redis
+            - logs:/var/log
+        tmpfs:
+            - /tmp
+        networks:
+            back-tier:
+                aliases:
+                    - redis
+        expose:
+            - "6379"
 volumes:
+    data: {}
     logs: {}
 networks:
     front-tier:
     back-tier:
-

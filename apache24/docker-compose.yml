@@ -2,6 +2,7 @@ version: "2"
 services:
     apache:
         build: .
+        image: gcr.io/ste-optical-vts/apache24
         ports:
             - "80:80"
             - "443:443"

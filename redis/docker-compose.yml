@@ -17,4 +17,3 @@ volumes:
     redis_data:
         driver: local
     logs: {}
-
