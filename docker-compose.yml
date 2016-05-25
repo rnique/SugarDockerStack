@@ -25,6 +25,7 @@ services:
             - "443:443"
         volumes:
             - /var/www/html:/var/www/html
+            - ./apache24/xtraparams.conf:/etc/httpd/conf.d/xtraparams.conf
         tmpfs:
             - /tmp
         networks:
