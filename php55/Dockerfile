@@ -36,8 +36,8 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
 	&& cd /etc \
     && sed -i -e '/^error_log/s/^/;/' \
         -e '/^daemonize/s/^/;/' php-fpm.conf \
-    && sed -i -e '/listen.allowed_clients/s/^/;/' \
-        -e '/listen ?=/s/^/;/' \
+    && sed -i -e '/^listen.allowed_clients/s/^/;/' \
+        -e 's/listen =/;&/' \
         -e '/session.save_handler/s/^/;/' \
         -e '/session.save_path/s/^/;/' ./php-fpm.d/www.conf \
 	&& { \
