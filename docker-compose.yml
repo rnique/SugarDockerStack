@@ -76,7 +76,7 @@ services:
         tmpfs:
             - /tmp
         networks:
-            - back-tier
+            back-tier:
                 aliases:
                     - elastic
         expose:
