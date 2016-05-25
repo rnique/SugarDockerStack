@@ -3,6 +3,8 @@ MAINTAINER http://steperu.com
 LABEL Vendor="PHP"
 LABEL License=GPLv2
 LABEL Version=5.5.x
+ARG PHP_SESSION_SAVE_HANDLER=redis
+ARG PHP_SESSION_SAVE_PATH="tcp://redis:6379"
 
 RUN yum -y --setopt=tsflags=nodocs update \
     && yum -y --setopt=tsflags=nodocs install \
@@ -11,9 +13,6 @@ RUN yum -y --setopt=tsflags=nodocs update \
         mailcap \
         wget \
     && yum clean all
-
-ARG PHP_SESSION_SAVE_HANDLER=redis
-ARG PHP_SESSION_SAVE_PATH="tcp://redis:6379"
 
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
     && yum -y --setopt=tsflags=nodocs install https://centos7.iuscommunity.org/ius-release.rpm \
@@ -53,7 +52,7 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
 		echo 'max_execution_time = 120'; \
 		echo 'memory_limit = 256M'; \
 		echo 'default_charset = "UTF-8"'; \
-		echo 'session.gc_maxlifetime = 36000'; \        
+		echo 'session.gc_maxlifetime = 36000'; \
 	} | tee -a php.ini \
 	&& { \
 		echo '[global]'; \
