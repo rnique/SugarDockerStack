@@ -30,11 +30,14 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
         php55u-opcache \
         php55u-pecl-redis \
         php55u-xml \
+        sendmail \
     && yum clean all \
     && set -ex \
 	&& cd /etc \
-    && sed -i -e '/^error_log/s/^/#/' -e '/^daemonize/s/^/#/' php-fpm.conf \
-    && sed -i -e '/listen.allowed_clients/s/^/#/' ./php-fpm.d/www.conf \
+    && sed -i -e '/^error_log/s/^/;/' \
+        -e '/^daemonize/s/^/;/' php-fpm.conf \
+    && sed -i -e '/listen.allowed_clients/s/^/;/' \
+        -e '/session.save_handler/s/^/;/' ./php-fpm.d/www.conf \
 	&& { \
 		echo 'date.timezone = America/Lima'; \
 		echo 'display_errors = 0'; \
