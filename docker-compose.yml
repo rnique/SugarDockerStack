@@ -69,8 +69,8 @@ services:
             - MARVEL_SUPPORT=true
         ports:
             - "9200:9200/tcp"
-        volumes:
-#            - ./elasticsearch.yml:/opt/elasticsearch/config/elasticsearch.yml
+        # volumes:
+            # - ./elasticsearch.yml:/opt/elasticsearch/config/elasticsearch.yml
         tmpfs:
             - /tmp
         networks:
