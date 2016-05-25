@@ -50,7 +50,7 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
 		echo 'session.cookie_httponly = 1'; \
 		echo 'session.use_trans_sid = 0'; \
 		echo 'upload_max_filesize = 99M'; \
-		echo 'max_execution_time = 120'; \
+		echo 'max_execution_time = 300'; \
 		echo 'memory_limit = 256M'; \
 		echo 'default_charset = "UTF-8"'; \
 		echo 'session.gc_maxlifetime = 36000'; \
