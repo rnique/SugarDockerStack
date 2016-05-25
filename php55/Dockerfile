@@ -3,8 +3,6 @@ MAINTAINER http://steperu.com
 LABEL Vendor="PHP"
 LABEL License=GPLv2
 LABEL Version=5.5.x
-ARG PHP_SESSION_SAVE_HANDLER=redis
-ARG PHP_SESSION_SAVE_PATH="tcp://redis:6379"
 
 RUN yum -y --setopt=tsflags=nodocs update \
     && yum -y --setopt=tsflags=nodocs install \
@@ -13,6 +11,9 @@ RUN yum -y --setopt=tsflags=nodocs update \
         mailcap \
         wget \
     && yum clean all
+
+ARG PHP_SESSION_SAVE_HANDLER=redis
+ARG PHP_SESSION_SAVE_PATH="tcp://redis:6379"
 
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
     && yum -y --setopt=tsflags=nodocs install https://centos7.iuscommunity.org/ius-release.rpm \
@@ -37,7 +38,8 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
     && sed -i -e '/^error_log/s/^/;/' \
         -e '/^daemonize/s/^/;/' php-fpm.conf \
     && sed -i -e '/listen.allowed_clients/s/^/;/' \
-        -e '/session.save_handler/s/^/;/' ./php-fpm.d/www.conf \
+        -e '/session.save_handler/s/^/;/' \
+        -e '/session.save_path/s/^/;/' ./php-fpm.d/www.conf \
 	&& { \
 		echo 'date.timezone = America/Lima'; \
 		echo 'display_errors = 0'; \
@@ -70,9 +72,10 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
 		echo; \
 		echo '; Ensure worker stdout and stderr are sent to the main error log.'; \
 		echo 'catch_workers_output = yes'; \
+		echo; \
 		echo "php_value[session.save_handler] = ${PHP_SESSION_SAVE_HANDLER}"; \
 		echo "php_value[session.save_path] = ${PHP_SESSION_SAVE_PATH}"; \
-	} | tee php-fpm.d/zz-docker.conf
+	} | tee php-fpm.d/docker.conf
 
 EXPOSE 9000
 
