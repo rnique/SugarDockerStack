@@ -63,6 +63,21 @@ services:
                     - redis
         expose:
             - "6379"
+    elasticsearch:
+        image: million12/elasticsearch:1.4.4
+        environment:
+            - MARVEL_SUPPORT=true
+        ports:
+            - "9200:9200/tcp"
+        volumes:
+#            - ./elasticsearch.yml:/opt/elasticsearch/config/elasticsearch.yml
+        tmpfs:
+            - /tmp
+        networks:
+            - back-tier
+        expose:
+            - "9200"
+            - "9300"
 volumes:
     db-data: {}
     db-logs: {}
