@@ -34,8 +34,6 @@ services:
         image: percona/percona-server:latest
         environment:
             - MYSQL_ROOT_PASSWORD=secret
-        ports:
-            - "3306:3306"
         volumes:
             - db-data:/var/lib/mysql
             - db-logs:/var/log/mysql
@@ -50,6 +48,8 @@ services:
         command:
             # Workaround for no my.cnf in image
             - '--user=mysql'
+        expose:
+            - "3306"
     redis:
         image: centos/redis
         environment:
