@@ -1,10 +1,7 @@
 FROM centos:7
 MAINTAINER http://steperu.com
-LABEL Vendor="PHP"
-LABEL License=GPLv2
-LABEL Version=5.5.x
-ARG PHP_SESSION_SAVE_HANDLER=redis
-ARG PHP_SESSION_SAVE_PATH="tcp://redis:6379"
+LABEL Vendor="STE PERU" \
+      License=GPLv2
 
 RUN yum -y --setopt=tsflags=nodocs update \
     && yum -y --setopt=tsflags=nodocs install \
@@ -13,6 +10,9 @@ RUN yum -y --setopt=tsflags=nodocs update \
         mailcap \
         wget \
     && yum clean all
+
+ARG PHP_SESSION_SAVE_HANDLER=redis
+ARG PHP_SESSION_SAVE_PATH="tcp://redis:6379"
 
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
     && yum -y --setopt=tsflags=nodocs install https://centos7.iuscommunity.org/ius-release.rpm \
@@ -31,8 +31,9 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
         php55u-pecl-redis \
         php55u-xml \
         sendmail \
-    && yum clean all \
-    && set -ex \
+    && yum clean all
+
+RUN set -ex \
 	&& cd /etc \
     && sed -i -e '/^error_log/s/^/;/' \
         -e '/^daemonize/s/^/;/' php-fpm.conf \

@@ -1,8 +1,7 @@
 FROM centos:7
-MAINTAINER http://www.centos.org
-LABEL Vendor="CentOS"
-LABEL License=GPLv2
-LABEL Version=2.4.6-31
+MAINTAINER http://steperu.com
+LABEL Vendor="STE PERU" \
+      License=GPLv2
 
 RUN yum -y --setopt=tsflags=nodocs update \
     && yum -y --setopt=tsflags=nodocs install \
@@ -20,6 +19,7 @@ RUN yum -y --setopt=tsflags=nodocs install \
     && wget -nv https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_x86_64.rpm \
     && rpm -U mod-pagespeed-stable_current_x86_64.rpm 2>/dev/null \
     && rm mod-pagespeed-stable_current_x86_64.rpm
+
 RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
         -e '/ mpm_event_module /s/^#//' \
         /etc/httpd/conf.modules.d/00-mpm.conf \
