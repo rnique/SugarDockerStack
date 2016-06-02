@@ -31,7 +31,7 @@ services:
         networks:
             - front-tier
     db:
-        image: percona/percona-server:5.7
+        image: percona/percona-docker
         environment:
             - MYSQL_ROOT_PASSWORD=secret
         volumes:
