@@ -2,13 +2,13 @@ version: "2"
 services:
     php:
         build:
-            context: ./php55
+            context: ./images/php55
             args:
                 PHP_SESSION_SAVE_HANDLER: redis
                 PHP_SESSION_SAVE_PATH: "tcp://redis:6379"
-        image: gcr.io/ste-optical-vts/php55
+        image: php55
         volumes:
-            - /var/www/html:/var/www/html
+            - ./data/www:/var/www/html
         tmpfs:
             - /tmp
         networks:
@@ -18,20 +18,20 @@ services:
             back-tier:
     apache:
         build:
-            context: ./apache24
-        image: gcr.io/ste-optical-vts/apache24
+            context: ./images/apache24
+        image: apache24
         ports:
             - "80:80"
             - "443:443"
         volumes:
-            - /var/www/html:/var/www/html
-            - ./apache24/xtraparams.conf:/etc/httpd/conf.d/xtraparams.conf
+            - ./data/www:/var/www/html
+#            - ./images/apache24/xtraparams.conf:/etc/httpd/conf.d/xtraparams.conf
         tmpfs:
             - /tmp
         networks:
             - front-tier
     db:
-        image: percona/percona-server:latest
+        image: percona/percona-server:5.7
         environment:
             - MYSQL_ROOT_PASSWORD=secret
         volumes:
@@ -72,8 +72,8 @@ services:
         ports:
             - "9200:9200/tcp"
         volumes:
-            - ./elasticsearch.in.sh:/opt/elasticsearch/bin/elasticsearch.in.sh
-            - ./elasticsearch.yml:/opt/elasticsearch/config/elasticsearch.yml
+            - ./images/elasticsearch/elasticsearch.in.sh:/opt/elasticsearch/bin/elasticsearch.in.sh
+            - ./images/elasticsearch/elasticsearch.yml:/opt/elasticsearch/config/elasticsearch.yml
         tmpfs:
             - /tmp
         networks:
