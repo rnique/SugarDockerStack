@@ -4,14 +4,14 @@ services:
         image: million12/elasticsearch:1.4.4
         environment:
             - MARVEL_SUPPORT=true
+            - ES_HEAP_SIZE=2g
         ports:
             - "9200:9200/tcp"
-#        volumes:
-#            - ./elasticsearch.yml:/opt/elasticsearch/config/elasticsearch.yml
+        volumes:
+            - ./elasticsearch.in.sh:/opt/elasticsearch/bin/elasticsearch.in.sh
+            - ./elasticsearch.yml:/opt/elasticsearch/config/elasticsearch.yml
         tmpfs:
             - /tmp
-        # networks:
-            # - back-tier
         expose:
             - "9200"
             - "9300"
