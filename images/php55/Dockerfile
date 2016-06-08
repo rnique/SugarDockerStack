@@ -44,7 +44,6 @@ RUN set -ex \
     && { \
         echo 'date.timezone = America/Lima'; \
         echo 'display_errors = 0'; \
-        echo "error_log = ${PHP_ERROR_LOG}"; \
         echo 'fastcgi.logging = 0'; \
         echo 'mbstring.func_overload = 0'; \
         echo 'post_max_size = 100M'; \
@@ -77,6 +76,7 @@ RUN set -ex \
         echo; \
         echo "php_value[session.save_handler] = ${PHP_SESSION_SAVE_HANDLER}"; \
         echo "php_value[session.save_path] = ${PHP_SESSION_SAVE_PATH}"; \
+        echo "php_value[error_log] = ${PHP_ERROR_LOG}"; \
     } | tee php-fpm.d/docker.conf
 
 EXPOSE 9000
