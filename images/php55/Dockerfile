@@ -44,6 +44,7 @@ RUN set -ex \
 	&& { \
 		echo 'date.timezone = America/Lima'; \
 		echo 'display_errors = 0'; \
+        echo 'error_log = ${PHP_ERROR_LOG}'; \
 		echo 'fastcgi.logging = 0'; \
 		echo 'mbstring.func_overload = 0'; \
 		echo 'post_max_size = 100M'; \
@@ -54,7 +55,7 @@ RUN set -ex \
 		echo 'max_execution_time = 300'; \
 		echo 'memory_limit = 256M'; \
 		echo 'default_charset = "UTF-8"'; \
-		echo 'session.gc_maxlifetime = 36000'; \
+		echo 'session.gc_maxlifetime = 3600'; \
 	} | tee -a php.ini \
 	&& { \
 		echo '[global]'; \
