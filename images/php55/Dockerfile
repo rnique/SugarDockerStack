@@ -74,9 +74,9 @@ RUN set -ex \
         echo '; Ensure worker stdout and stderr are sent to the main error log.'; \
         echo 'catch_workers_output = yes'; \
         echo; \
+        echo "php_value[error_log] = ${PHP_ERROR_LOG_FILE}"; \
         echo "php_value[session.save_handler] = ${PHP_SESSION_SAVE_HANDLER}"; \
         echo "php_value[session.save_path] = ${PHP_SESSION_SAVE_PATH}"; \
-        echo "php_value[error_log] = ${PHP_ERROR_LOG}"; \
     } | tee php-fpm.d/docker.conf
 
 EXPOSE 9000
