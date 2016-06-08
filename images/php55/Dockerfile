@@ -34,50 +34,50 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
     && yum clean all
 
 RUN set -ex \
-	&& cd /etc \
+    && cd /etc \
     && sed -i -e '/^error_log/s/^/;/' \
         -e '/^daemonize/s/^/;/' php-fpm.conf \
     && sed -i -e '/^listen.allowed_clients/s/^/;/' \
         -e 's/listen =/;&/' \
         -e '/session.save_handler/s/^/;/' \
         -e '/session.save_path/s/^/;/' ./php-fpm.d/www.conf \
-	&& { \
-		echo 'date.timezone = America/Lima'; \
-		echo 'display_errors = 0'; \
-        echo 'error_log = ${PHP_ERROR_LOG}'; \
-		echo 'fastcgi.logging = 0'; \
-		echo 'mbstring.func_overload = 0'; \
-		echo 'post_max_size = 100M'; \
-		echo 'session.use_cookies = 1'; \
-		echo 'session.cookie_httponly = 1'; \
-		echo 'session.use_trans_sid = 0'; \
-		echo 'upload_max_filesize = 99M'; \
-		echo 'max_execution_time = 300'; \
-		echo 'memory_limit = 256M'; \
-		echo 'default_charset = "UTF-8"'; \
-		echo 'session.gc_maxlifetime = 3600'; \
-	} | tee -a php.ini \
-	&& { \
-		echo '[global]'; \
-		echo 'daemonize = no'; \
-		echo 'error_log = /proc/self/fd/2'; \
-		echo; \
-		echo '[www]'; \
-		echo 'listen = 9000'; \
+    && { \
+        echo 'date.timezone = America/Lima'; \
+        echo 'display_errors = 0'; \
+        echo "error_log = ${PHP_ERROR_LOG}"; \
+        echo 'fastcgi.logging = 0'; \
+        echo 'mbstring.func_overload = 0'; \
+        echo 'post_max_size = 100M'; \
+        echo 'session.use_cookies = 1'; \
+        echo 'session.cookie_httponly = 1'; \
+        echo 'session.use_trans_sid = 0'; \
+        echo 'upload_max_filesize = 99M'; \
+        echo 'max_execution_time = 300'; \
+        echo 'memory_limit = 256M'; \
+        echo 'default_charset = "UTF-8"'; \
+        echo 'session.gc_maxlifetime = 3600'; \
+    } | tee -a php.ini \
+    && { \
+        echo '[global]'; \
+        echo 'daemonize = no'; \
+        echo 'error_log = /proc/self/fd/2'; \
+        echo; \
+        echo '[www]'; \
+        echo 'listen = 9000'; \
         echo 'pm.status_path = /php-status-page'; \
         echo 'pm = ondemand'; \
-		echo; \
-		echo '; if we send this to /proc/self/fd/1, it never appears'; \
-		echo 'access.log = /proc/self/fd/2'; \
-		echo; \
-		echo 'clear_env = no'; \
-		echo; \
-		echo '; Ensure worker stdout and stderr are sent to the main error log.'; \
-		echo 'catch_workers_output = yes'; \
-		echo; \
-		echo "php_value[session.save_handler] = ${PHP_SESSION_SAVE_HANDLER}"; \
-		echo "php_value[session.save_path] = ${PHP_SESSION_SAVE_PATH}"; \
-	} | tee php-fpm.d/docker.conf
+        echo; \
+        echo '; if we send this to /proc/self/fd/1, it never appears'; \
+        echo 'access.log = /proc/self/fd/2'; \
+        echo; \
+        echo 'clear_env = no'; \
+        echo; \
+        echo '; Ensure worker stdout and stderr are sent to the main error log.'; \
+        echo 'catch_workers_output = yes'; \
+        echo; \
+        echo "php_value[session.save_handler] = ${PHP_SESSION_SAVE_HANDLER}"; \
+        echo "php_value[session.save_path] = ${PHP_SESSION_SAVE_PATH}"; \
+    } | tee php-fpm.d/docker.conf
 
 EXPOSE 9000
 
