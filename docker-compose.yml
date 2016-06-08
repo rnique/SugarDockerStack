@@ -6,6 +6,7 @@ services:
             args:
                 PHP_SESSION_SAVE_HANDLER: redis
                 PHP_SESSION_SAVE_PATH: "tcp://redis:6379"
+                PHP_ERROR_LOG: "/proc/self/fd/2"
         image: php55
         volumes:
             - ./data/www:/var/www/html
