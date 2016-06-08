@@ -41,7 +41,8 @@ RUN set -ex \
     && sed -i -e '/^listen.allowed_clients/s/^/;/' \
         -e 's/listen =/;&/' \
         -e '/session.save_handler/s/^/;/' \
-        -e '/session.save_path/s/^/;/' ./php-fpm.d/www.conf \
+        -e '/session.save_path/s/^/;/' \
+        -e '/php_admin_value[error_log]/s/^/;/' ./php-fpm.d/www.conf \
     && { \
         echo 'date.timezone = America/Lima'; \
         echo 'display_errors = 0'; \
@@ -75,9 +76,9 @@ RUN set -ex \
         echo '; Ensure worker stdout and stderr are sent to the main error log.'; \
         echo 'catch_workers_output = yes'; \
         echo; \
+        echo "php_admin_value[error_log] = ${PHP_ERROR_LOG}"; \
         echo "php_value[session.save_handler] = ${PHP_SESSION_SAVE_HANDLER}"; \
         echo "php_value[session.save_path] = ${PHP_SESSION_SAVE_PATH}"; \
-        echo "php_value[error_log] = ${PHP_ERROR_LOG}"; \
     } | tee php-fpm.d/docker.conf
 
 EXPOSE 9000
