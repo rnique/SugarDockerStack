@@ -42,6 +42,7 @@ RUN set -ex \
         -e 's/listen =/;&/' \
         -e '/session.save_handler/s/^/;/' \
         -e '/session.save_path/s/^/;/' \
+        -e 's/pm =/;&/' \
         -e '/php_admin_value[error_log]/s/^/;/' ./php-fpm.d/www.conf \
     && { \
         echo 'date.timezone = America/Lima'; \
