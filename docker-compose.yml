@@ -55,8 +55,8 @@ services:
         image: centos/redis
         environment:
             - MASTER=true
-        volumes:
-            - redis-data:/var/lib/redis
+#        volumes:
+#            - redis-data:/var/lib/redis
         tmpfs:
             - /tmp
         networks:
@@ -87,7 +87,7 @@ services:
 volumes:
     db-data: {}
     db-logs: {}
-    redis-data: {}
+#    redis-data: {}
 networks:
     front-tier:
     back-tier:
