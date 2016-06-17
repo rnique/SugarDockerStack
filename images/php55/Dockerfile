@@ -62,7 +62,7 @@ RUN set -ex \
     && { \
         echo '[global]'; \
         echo 'daemonize = no'; \
-        echo 'error_log = /proc/self/fd/2'; \
+        echo 'error_log = /var/log/php-fpm-error.log'; \
         echo; \
         echo '[www]'; \
         echo 'listen = 9000'; \
