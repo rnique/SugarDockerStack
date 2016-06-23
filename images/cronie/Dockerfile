@@ -12,6 +12,7 @@ RUN yum -y --setopt=tsflags=nodocs update \
     && yum clean all
 
 COPY start-cron.sh /usr/bin/start-cron.sh
+
 RUN yum -y --setopt=tsflags=nodocs install \
         cronie \
         rsyslog \
