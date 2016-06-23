@@ -1,7 +1,9 @@
 dockerfiles-centos-httpd
 ========================
+FROM    centos:7
+IMAGE   rnique/apache24
 
-CentOS  dockerfile for httpd
+CentOS dockerfile for httpd
 
 Get Docker version
 
