@@ -10,7 +10,7 @@ services:
         image: php55
         volumes:
             - ./data/www:/var/www/html
-            - ./log/php.log:/var/log/php.log
+#            - ./log/php.log:/var/log/php.log
             - ./log/php-fpm-error.log:/var/log/php-fpm-error.log
         tmpfs:
             - /tmp
@@ -91,6 +91,7 @@ services:
         build:
             context: ./images/crontab
         image: crontab
+            - ./data/www:/var/www/html
             - ./log/cron.log:/var/log/cron.log
         tmpfs:
             - /tmp
