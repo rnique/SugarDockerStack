@@ -87,10 +87,10 @@ services:
         expose:
             - "9200"
             - "9300"
-    crontab:
+    cronjobs:
         build:
             context: ./images/crontab
-        image: crontab
+        image: cronjobs
             - ./data/www:/var/www/html
             - ./log/cron.log:/var/log/cron.log
         tmpfs:
