@@ -20,3 +20,5 @@ RUN yum -y --setopt=tsflags=nodocs install \
     && chmod +x /usr/bin/start-cron.sh \
     && touch /var/log/cron.log \
     && crontab /etc/crontab
+
+CMD /usr/bin/start-cron.sh
