@@ -66,7 +66,7 @@ RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
     && sed -i -e '/ModPagespeedRespectVary /s/#//' \
         /etc/httpd/conf.d/pagespeed.conf 2>/dev/null \
     && sh /etc/cron.daily/mod-pagespeed \
-    && chmod -v +x /run-httpd.sh
+    && chmod -v +x /usr/bin/run-httpd.sh
 
 EXPOSE 80 443
 
