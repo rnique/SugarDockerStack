@@ -13,7 +13,7 @@ RUN yum -y --setopt=tsflags=nodocs update \
 
 ARG PHP_SESSION_SAVE_HANDLER=redis
 ARG PHP_SESSION_SAVE_PATH="tcp://redis:6379"
-ARG PHP_ERROR_LOG="/var/log/php-fpm-error.log"
+ARG PHP_FPM_ERROR_LOG="/var/log/php-fpm-error.log"
 
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
     && yum -y --setopt=tsflags=nodocs install https://centos7.iuscommunity.org/ius-release.rpm \
@@ -62,7 +62,7 @@ RUN set -ex \
     && { \
         echo '[global]'; \
         echo 'daemonize = no'; \
-        echo 'error_log = ${PHP_ERROR_LOG}'; \
+        echo "error_log = ${PHP_FPM_ERROR_LOG}"; \
         echo; \
         echo '[www]'; \
         echo 'listen = 9000'; \
