@@ -13,7 +13,7 @@ RUN yum -y --setopt=tsflags=nodocs update \
 
 ARG PHP_SESSION_SAVE_HANDLER=redis
 ARG PHP_SESSION_SAVE_PATH="tcp://redis:6379"
-ARG PHP_ERROR_LOG="/var/log/php.log"
+ARG PHP_ERROR_LOG="/var/log/php-fpm-error.log"
 
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
     && yum -y --setopt=tsflags=nodocs install https://centos7.iuscommunity.org/ius-release.rpm \
@@ -62,7 +62,7 @@ RUN set -ex \
     && { \
         echo '[global]'; \
         echo 'daemonize = no'; \
-        echo 'error_log = /var/log/php-fpm-error.log'; \
+        echo 'error_log = ${PHP_ERROR_LOG}'; \
         echo; \
         echo '[www]'; \
         echo 'listen = 9000'; \
@@ -79,7 +79,7 @@ RUN set -ex \
         echo '; Ensure worker stdout and stderr are sent to the main error log.'; \
         echo 'catch_workers_output = yes'; \
         echo; \
-        echo "php_admin_value[error_log] = ${PHP_ERROR_LOG}"; \
+#        echo "php_admin_value[error_log] = ${PHP_ERROR_LOG}"; \
         echo "php_value[session.save_handler] = ${PHP_SESSION_SAVE_HANDLER}"; \
         echo "php_value[session.save_path] = ${PHP_SESSION_SAVE_PATH}"; \
     } | tee php-fpm.d/docker.conf

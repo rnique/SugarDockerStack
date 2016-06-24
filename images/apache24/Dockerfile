@@ -20,6 +20,9 @@ RUN yum -y --setopt=tsflags=nodocs install \
     && rpm -U mod-pagespeed-stable_current_x86_64.rpm 2>/dev/null \
     && rm mod-pagespeed-stable_current_x86_64.rpm
 
+# Simple startup script to avoid some issues observed with container restart 
+COPY run-httpd.sh /usr/bin/run-httpd.sh
+
 RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
         -e '/ mpm_event_module /s/^#//' \
         /etc/httpd/conf.modules.d/00-mpm.conf \
@@ -62,7 +65,8 @@ RUN sed -i -e '/ mpm_prefork_module /s/^/#/' \
         /etc/httpd/conf.modules.d/00-proxy.conf \
     && sed -i -e '/ModPagespeedRespectVary /s/#//' \
         /etc/httpd/conf.d/pagespeed.conf 2>/dev/null \
-    && sh /etc/cron.daily/mod-pagespeed
+    && sh /etc/cron.daily/mod-pagespeed \
+    && chmod -v +x /run-httpd.sh
 
 EXPOSE 80 443
 
@@ -70,8 +74,4 @@ COPY mpm_event_module.conf /etc/httpd/conf.d/mpm_event_module.conf
 COPY security.conf /etc/httpd/conf.d/security.conf
 COPY xtraparams.conf /etc/httpd/conf.d/xtraparams.conf
 
-# Simple startup script to avoid some issues observed with container restart 
-COPY run-httpd.sh /run-httpd.sh
-RUN chmod -v +x /run-httpd.sh
-
-CMD ["/run-httpd.sh"]
+CMD ["/usr/bin/run-httpd.sh"]
