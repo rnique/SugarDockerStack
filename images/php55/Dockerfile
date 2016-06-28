@@ -7,7 +7,6 @@ RUN yum -y --setopt=tsflags=nodocs update \
     && yum -y --setopt=tsflags=nodocs install \
         epel-release \
         libzip \
-        mailcap \
         wget \
     && yum clean all
 
@@ -19,6 +18,7 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
     && yum -y --setopt=tsflags=nodocs install https://centos7.iuscommunity.org/ius-release.rpm \
     && rpm --import /etc/pki/rpm-gpg/IUS-COMMUNITY-GPG-KEY \
     && yum -y --setopt=tsflags=nodocs install \
+        mailcap \
         php55u-fpm \
         php55u-bcmath \
         php55u-common \

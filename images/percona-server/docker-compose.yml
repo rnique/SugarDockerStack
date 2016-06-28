@@ -1,7 +1,7 @@
 version: "2"
 services:
     db:
-        image: percona/percona-server:latest
+        image: rnique/percona-server
         environment:
             - MYSQL_ROOT_PASSWORD=secret
         ports:

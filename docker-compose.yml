@@ -19,6 +19,8 @@ services:
                 aliases:
                     - php
             back-tier:
+        depends_on:
+            - redis
     apache:
         build:
             context: ./images/apache24
@@ -35,7 +37,9 @@ services:
         networks:
             - front-tier
     db:
-        image: percona/percona-server:5.7
+        build:
+            context: ./images/percona-server
+        image: rnique/percona-server
         environment:
             - MYSQL_ROOT_PASSWORD=secret
         volumes:
@@ -89,8 +93,8 @@ services:
             - "9300"
     cron:
         build:
-            context: ./images/cronie
-        image: rnique/cronie
+            context: ./images/php55-cron
+        image: rnique/php55-cron
         volumes:
             - ./data/www:/var/www/html
             - ./images/cronie/crontab:/etc/crontab
@@ -99,6 +103,8 @@ services:
             - /tmp
         networks:
             - front-tier
+        depends_on:
+            - php55
 volumes:
     db-data: {}
     db-logs: {}

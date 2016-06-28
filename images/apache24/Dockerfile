@@ -7,13 +7,13 @@ RUN yum -y --setopt=tsflags=nodocs update \
     && yum -y --setopt=tsflags=nodocs install \
         epel-release \
         libzip \
-        mailcap \
         wget \
     && yum clean all
 
 RUN yum -y --setopt=tsflags=nodocs install \
         httpd \
         libevent \
+        mailcap \
         at \
     && yum clean all \
     && wget -nv https://dl-ssl.google.com/dl/linux/direct/mod-pagespeed-stable_current_x86_64.rpm \
