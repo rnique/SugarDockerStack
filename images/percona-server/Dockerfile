@@ -13,7 +13,7 @@ RUN yum -y --setopt=tsflags=nodocs update \
 RUN rpmkeys --import https://www.percona.com/downloads/RPM-GPG-KEY-percona
 
 RUN yum install -y http://www.percona.com/downloads/percona-release/redhat/0.1-3/percona-release-0.1-3.noarch.rpm \
-    && yum install -y --setopt=tsflags=nodocs which Percona-Server-server-57 Percona-Server-client-57 Percona-Server-shared-57 Percona-Server-tokudb-57
+    && yum install -y --setopt=tsflags=nodocs which Percona-Server-server-57 Percona-Server-client-57 Percona-Server-shared-57 Percona-Server-tokudb-57 \
     && yum clean all
 
 # Install server
