@@ -20,16 +20,18 @@ RUN yum install -y http://www.percona.com/downloads/percona-release/redhat/0.1-3
 
 # comment out a few problematic configuration values
 # don't reverse lookup hostnames, they are usually another container
-RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf \
-	&& echo 'skip-host-cache\nskip-name-resolve' | awk '{ print } $1 == "[mysqld]" && c == 0 { c = 1; system("cat") }' /etc/mysql/my.cnf > /tmp/my.cnf \
-	&& mv /tmp/my.cnf /etc/mysql/my.cnf
+#RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf \
+#	&& echo 'skip-host-cache\nskip-name-resolve' | awk '{ print } $1 == "[mysqld]" && c == 0 { c = 1; system("cat") }' /etc/mysql/my.cnf > /tmp/my.cnf \
+#	&& mv /tmp/my.cnf /etc/mysql/my.cnf
 
-RUN mkdir /docker-entrypoint-initdb.d
+COPY ps-entry.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
+    && ln -s /usr/local/bin/entrypoint.sh / # backwards compat
+    && mkdir /docker-entrypoint-initdb.d
 
 VOLUME ["/var/lib/mysql"]
 
-COPY ps-entry.sh /usr/local/bin/entrypoint.sh
-RUN ln -s /usr/local/bin/entrypoint.sh / # backwards compat
 ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 3306
