@@ -26,10 +26,11 @@ RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/my.cnf \
 
 RUN mkdir /docker-entrypoint-initdb.d
 
-VOLUME ["/var/lib/mysql", "/var/log/mysql"]
+VOLUME ["/var/lib/mysql"]
 
-COPY ps-entry.sh /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+COPY ps-entry.sh /usr/local/bin/entrypoint.sh
+RUN ln -s /usr/local/bin/entrypoint.sh / # backwards compat
+ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 3306
 CMD [""]
