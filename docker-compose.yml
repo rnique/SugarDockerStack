@@ -97,7 +97,7 @@ services:
         image: rnique/php55-cron
         volumes:
             - ./data/www:/var/www/html
-            - ./images/cronie/crontab:/etc/crontab
+            - ./images/php55-cron/crontab:/etc/crontab
             - ./log/cron.log:/var/log/cron.log
         tmpfs:
             - /tmp
