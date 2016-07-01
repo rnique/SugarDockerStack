@@ -1,12 +1,13 @@
 version: "2"
 services:
     php:
+        depends_on:
+            - redis
         build:
             context: ./images/php55
             args:
                 PHP_SESSION_SAVE_HANDLER: redis
                 PHP_SESSION_SAVE_PATH: "tcp://redis:6379"
-                PHP_FPM_ERROR_LOG: "/var/log/php-fpm-error.log"
         image: rnique/php55
         volumes:
             - ./data/www:/var/www/html
@@ -19,8 +20,6 @@ services:
                 aliases:
                     - php
             back-tier:
-        depends_on:
-            - redis
     apache:
         build:
             context: ./images/apache24
@@ -92,6 +91,8 @@ services:
             - "9200"
             - "9300"
     cron:
+        depends_on:
+            - php
         build:
             context: ./images/php55-cron
         image: rnique/php55-cron
@@ -103,8 +104,6 @@ services:
             - /tmp
         networks:
             - front-tier
-        depends_on:
-            - php
 volumes:
     db-data: {}
     db-logs: {}
