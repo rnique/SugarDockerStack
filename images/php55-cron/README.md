@@ -1,6 +1,6 @@
 dockerfiles-centos-cronie
 ========================
-FROM    centos:7
+FROM    rnique/php55
 IMAGE   rnique/cronie
 
 Crontab (cronie package) + Rsyslog
