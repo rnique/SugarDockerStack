@@ -46,8 +46,6 @@ services:
             - db-logs:/var/log/mysql
             # bind mount my local my.cnf
             # - $PWD/my.cnf:/etc/my.cnf
-        volumes_from:
-            - dbdata
         tmpfs:
             - /run
             - /tmp
