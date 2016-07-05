@@ -83,6 +83,8 @@ services:
             - "9200"
             - "9300"
     cron:
+        depends_on:
+            - php
         build:
             context: ./images/php55-cron
         image: rnique/php55-cron
