@@ -14,12 +14,11 @@ services:
 #            - ./log/php.log:/var/log/php.log
             - ./log/php-fpm-error.log:/var/log/php-fpm-error.log
         tmpfs:
+            - /run
             - /tmp
         networks:
-            front-tier:
-                aliases:
-                    - php
-            back-tier:
+            - front-tier
+            - back-tier
     apache:
         build:
             context: ./images/apache24
@@ -32,6 +31,7 @@ services:
             - ./images/apache24/xtraparams.conf:/etc/httpd/conf.d/xtraparams.conf
             - ./log/apache.log:/var/log/apache.log
         tmpfs:
+            - /run
             - /tmp
         networks:
             - front-tier
@@ -46,7 +46,10 @@ services:
             - db-logs:/var/log/mysql
             # bind mount my local my.cnf
             # - $PWD/my.cnf:/etc/my.cnf
+        volumes_from:
+            - dbdata
         tmpfs:
+            - /run
             - /tmp
         networks:
             back-tier:
@@ -64,11 +67,10 @@ services:
 #        volumes:
 #            - redis-data:/var/lib/redis
         tmpfs:
+            - /run
             - /tmp
         networks:
-            back-tier:
-                aliases:
-                    - redis
+            - back-tier
         expose:
             - "6379"
     elasticsearch:
@@ -82,6 +84,7 @@ services:
             - ./images/elasticsearch/elasticsearch.in.sh:/opt/elasticsearch/bin/elasticsearch.in.sh
             - ./images/elasticsearch/elasticsearch.yml:/opt/elasticsearch/config/elasticsearch.yml
         tmpfs:
+            - /run
             - /tmp
         networks:
             back-tier:
@@ -101,11 +104,14 @@ services:
             - ./images/php55-cron/crontab:/etc/crontab
             - ./log/cron.log:/var/log/cron.log
         tmpfs:
+            - /run
             - /tmp
         networks:
-            - front-tier
+            - back-tier
 volumes:
-    db-data: {}
+    db-data:
+        external:
+            name: mysql-data-volume
     db-logs: {}
 #    redis-data: {}
 networks:
