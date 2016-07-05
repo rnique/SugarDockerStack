@@ -14,7 +14,7 @@ RUN rpmkeys --import https://www.percona.com/downloads/RPM-GPG-KEY-percona \
 # don't reverse lookup hostnames, they are usually another container
 RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/my.cnf \
 	&& echo 'skip-host-cache\nskip-name-resolve' | awk '{ print } $1 == "[mysqld]" && c == 0 { c = 1; system("cat") }' /etc/my.cnf > /tmp/my.cnf \
-	&& mv /tmp/my.cnf /etc/my.cnf
+	&& mv /tmp/my.cnf /etc/my.cnf \
     && mkdir /docker-entrypoint-initdb.d
 
 COPY ps-entry.sh /usr/local/bin/entrypoint.sh
