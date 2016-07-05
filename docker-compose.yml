@@ -18,8 +18,8 @@ services:
             - front-tier
             - back-tier
     apache:
-        build:
-            context: ./images/apache24
+#        build:
+#            context: ./images/apache24
         image: rnique/apache24
         ports:
             - "80:80"
@@ -97,9 +97,9 @@ services:
         networks:
             - back-tier
 volumes:
-    db-data:
-        external:
-            name: mysql-data-volume
+    db-data: {}
+#        external:
+#            name: mysql-data-volume
     db-logs: {}
 #    redis-data: {}
 networks:

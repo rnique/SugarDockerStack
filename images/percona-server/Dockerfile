@@ -7,7 +7,7 @@ LABEL Vendor="STE PERU" \
 
 RUN rpmkeys --import https://www.percona.com/downloads/RPM-GPG-KEY-percona \
     && yum install -y http://www.percona.com/downloads/percona-release/redhat/0.1-3/percona-release-0.1-3.noarch.rpm \
-    && yum install -y --setopt=tsflags=nodocs which Percona-Server-server-57 Percona-Server-client-57 Percona-Server-shared-57 Percona-Server-tokudb-57 \
+    && yum install -y --setopt=tsflags=nodocs ca-certificates which Percona-Server-server-57 Percona-Server-client-57 Percona-Server-shared-57 Percona-Server-tokudb-57 \
     && yum clean all
 
 # comment out a few problematic configuration values
@@ -15,16 +15,16 @@ RUN rpmkeys --import https://www.percona.com/downloads/RPM-GPG-KEY-percona \
 RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/my.cnf \
 	&& echo 'skip-host-cache\nskip-name-resolve' | awk '{ print } $1 == "[mysqld]" && c == 0 { c = 1; system("cat") }' /etc/my.cnf > /tmp/my.cnf \
 	&& mv /tmp/my.cnf /etc/my.cnf
+    && mkdir /docker-entrypoint-initdb.d
 
 COPY ps-entry.sh /usr/local/bin/entrypoint.sh
 
 RUN chmod +x /usr/local/bin/entrypoint.sh \
-    && ln -s /usr/local/bin/entrypoint.sh / \
-    && mkdir /docker-entrypoint-initdb.d
+    && ln -s /usr/local/bin/entrypoint.sh /
 
-VOLUME ["/var/lib/mysql"]
+VOLUME ["/var/lib/mysql", "/var/log/mysql"]
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 3306
 CMD [""]
