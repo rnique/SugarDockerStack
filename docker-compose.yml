@@ -11,10 +11,8 @@ services:
         image: rnique/php55
         volumes:
             - ./data/www:/var/www/html
-#            - ./log/php.log:/var/log/php.log
             - ./log/php-fpm-error.log:/var/log/php-fpm-error.log
         tmpfs:
-            - /run/php-fpm
             - /tmp
         networks:
             - front-tier
@@ -51,9 +49,6 @@ services:
             back-tier:
                 aliases:
                     - mysql
-        command:
-            # Workaround for no my.cnf in image
-            - '--user=mysql'
         expose:
             - "3306"
     redis:
@@ -72,7 +67,7 @@ services:
         image: million12/elasticsearch:1.4.4
         environment:
             - MARVEL_SUPPORT=true
-            - ES_HEAP_SIZE=2g
+            - ES_HEAP_SIZE=1g
         ports:
             - "9200:9200/tcp"
         volumes:
@@ -88,8 +83,6 @@ services:
             - "9200"
             - "9300"
     cron:
-        depends_on:
-            - php
         build:
             context: ./images/php55-cron
         image: rnique/php55-cron

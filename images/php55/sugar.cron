@@ -1,4 +1,0 @@
-#!/bin/bash
-PATH=/sbin:/bin:/usr/sbin:/usr/bin
-
-*    *    *    *    * apache cd /var/www/html/sugar1; php -f cron.php > /dev/null 2>&1
