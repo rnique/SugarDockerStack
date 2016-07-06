@@ -22,7 +22,7 @@ COPY ps-entry.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh \
     && ln -s /usr/local/bin/entrypoint.sh /
 
-VOLUME ["/var/lib/mysql", "/var/log/mysql"]
+VOLUME ["/var/lib/mysql"]
 
 ENTRYPOINT ["/entrypoint.sh"]
 
