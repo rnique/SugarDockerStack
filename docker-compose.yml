@@ -33,14 +33,13 @@ services:
         networks:
             - front-tier
     db:
-        build:
-            context: ./images/percona-server
+#        build:
+#            context: ./images/percona-server
         image: rnique/percona-server
         environment:
             - MYSQL_ROOT_PASSWORD=secret
         volumes:
             - db-data:/var/lib/mysql
-            - db-logs:/var/log/mysql
             # bind mount my local my.cnf
             # - $PWD/my.cnf:/etc/my.cnf
         tmpfs:
@@ -100,7 +99,6 @@ volumes:
     db-data: {}
 #        external:
 #            name: mysql-data-volume
-    db-logs: {}
 #    redis-data: {}
 networks:
     front-tier:
