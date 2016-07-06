@@ -54,8 +54,6 @@ services:
         image: centos/redis
         environment:
             - MASTER=true
-#        volumes:
-#            - redis-data:/var/lib/redis
         tmpfs:
             - /tmp
         networks:
@@ -99,7 +97,6 @@ volumes:
     db-data: {}
 #        external:
 #            name: mysql-data-volume
-#    redis-data: {}
 networks:
     front-tier:
     back-tier:
