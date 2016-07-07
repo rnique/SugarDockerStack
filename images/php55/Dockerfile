@@ -3,9 +3,9 @@ MAINTAINER http://steperu.com
 LABEL Vendor="STE PERU" \
       License=GPLv2
 
-ARG PHP_SESSION_SAVE_HANDLER=files
-ARG PHP_SESSION_SAVE_PATH="2;/tmp"
-ARG PHP_FPM_ERROR_LOG="/var/log/php-fpm-error.log"
+ENV PHP_SESSION_SAVE_HANDLER=files
+ENV PHP_SESSION_SAVE_PATH="2;/tmp"
+ENV PHP_FPM_ERROR_LOG="/var/log/php-fpm-error.log"
 
 RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
     && yum -y --setopt=tsflags=nodocs install https://centos7.iuscommunity.org/ius-release.rpm \
@@ -55,7 +55,7 @@ RUN set -ex \
     && { \
         echo '[global]'; \
         echo 'daemonize = no'; \
-        echo "error_log = ${PHP_FPM_ERROR_LOG}"; \
+        echo "error_log = $PHP_FPM_ERROR_LOG"; \
         echo; \
         echo '[www]'; \
         echo 'listen = 9000'; \
@@ -73,10 +73,10 @@ RUN set -ex \
         echo 'catch_workers_output = yes'; \
         echo; \
         echo "php_admin_value[error_log] = /var/log/php.log"; \
-        echo "php_value[session.save_handler] = ${PHP_SESSION_SAVE_HANDLER}"; \
-        echo "php_value[session.save_path] = ${PHP_SESSION_SAVE_PATH}"; \
+        echo "php_value[session.save_handler] = $PHP_SESSION_SAVE_HANDLER"; \
+        echo "php_value[session.save_path] = $PHP_SESSION_SAVE_PATH"; \
     } | tee php-fpm.d/docker.conf
 
 EXPOSE 9000
 
-ENTRYPOINT ["/bin/bash","php-fpm"]
+CMD ["/bin/bash","php-fpm"]
