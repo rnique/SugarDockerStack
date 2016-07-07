@@ -5,10 +5,10 @@ services:
             - redis
         build:
             context: ./images/php55
-            args:
-                PHP_SESSION_SAVE_HANDLER: redis
-                PHP_SESSION_SAVE_PATH: "tcp://redis:6379"
         image: rnique/php55
+        environment:
+            PHP_SESSION_SAVE_HANDLER: redis
+            PHP_SESSION_SAVE_PATH: "tcp://redis:6379"
         volumes:
             - ./data/www:/var/www/html
             - ./log/php-fpm-error.log:/var/log/php-fpm-error.log

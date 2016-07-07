@@ -79,4 +79,9 @@ RUN set -ex \
 
 EXPOSE 9000
 
-CMD ["/bin/bash","php-fpm"]
+COPY php-entry.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh \
+    && ln -s /usr/local/bin/entrypoint.sh /
+
+CMD ["/bin/bash","/entrypoint.sh"]
