@@ -79,4 +79,4 @@ RUN set -ex \
 
 EXPOSE 9000
 
-CMD ["php-fpm"]
+ENTRYPOINT ["/bin/bash","php-fpm"]
