@@ -61,8 +61,8 @@ RUN set -ex \
         echo 'listen = 9000'; \
         echo 'pm.status_path = /php-status-page'; \
         echo 'pm = ondemand'; \
-        echo 'pm.process_idle_timeout = 60'; \
-        echo 'pm.max_requests = 120'; \
+        echo 'pm.process_idle_timeout = 90'; \
+        echo 'pm.max_requests = 250'; \
         echo; \
         echo '; if we send this to /proc/self/fd/1, it never appears'; \
         echo 'access.log = /proc/self/fd/2'; \
