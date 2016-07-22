@@ -15,6 +15,7 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
         php55u-fpm \
         php55u-bcmath \
         php55u-common \
+        php55u-debuginfo \
         php55u-gd \
         php55u-imap \
         php55u-ldap \
@@ -23,6 +24,9 @@ RUN rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 \
         php55u-mysqlnd \
         php55u-opcache \
         php55u-pecl-redis \
+        php55u-pecl-redis-debuginfo \
+        php55u-pecl-uploadprogress \
+        php55u-pecl-uploadprogress-debuginfo \
         php55u-xml \
         sendmail \
     && yum clean all
