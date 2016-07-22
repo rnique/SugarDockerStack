@@ -3,8 +3,8 @@ services:
     php:
         depends_on:
             - redis
-        build:
-            context: ./images/php55
+#        build:
+#            context: ./images/php55
         image: rnique/php55
         environment:
             PHP_SESSION_SAVE_HANDLER: redis
