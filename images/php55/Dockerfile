@@ -48,7 +48,7 @@ RUN set -ex \
         echo 'session.use_trans_sid = 0'; \
         echo 'upload_max_filesize = 99M'; \
         echo 'max_execution_time = 300'; \
-        echo 'memory_limit = 256M'; \
+        echo 'memory_limit = 512M'; \
         echo 'default_charset = "UTF-8"'; \
         echo 'session.gc_maxlifetime = 3600'; \
     } | tee -a php.ini \
