@@ -70,6 +70,7 @@ services:
         volumes:
             - ./images/elasticsearch/elasticsearch.in.sh:/opt/elasticsearch/bin/elasticsearch.in.sh
             - ./images/elasticsearch/elasticsearch.yml:/opt/elasticsearch/config/elasticsearch.yml
+            - elasticsearch_data:/opt/elasticsearch/data
         tmpfs:
             - /tmp
         networks:
@@ -97,6 +98,7 @@ volumes:
     db-data: {}
 #        external:
 #            name: mysql-data-volume
+    elasticsearch_data: {}
 networks:
     front-tier:
     back-tier:
